@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,redirect, url_for,request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import select
 import os
@@ -34,6 +34,18 @@ def assos():
     #for data in datas:
      #   print(f"{data.rna_id}")
     #return render_template('assos.html')
+@app.route('/delete_data/<int:id>', methods=['POST'])
+def delete_data(id):
+    data = Data.query.get_or_404(id)
+
+    if request.method == 'POST':
+        # Supprimer la ligne et rediriger vers la page principale
+        db.session.delete(data)
+        db.session.commit()
+        return redirect(url_for('assos'))
+
+    # Sinon, afficher un formulaire pour confirmer la suppression
+    return render_template('delete_data.html', data=data)
 
 @app.route('/hello')
 @app.route('/hello/<name>')
