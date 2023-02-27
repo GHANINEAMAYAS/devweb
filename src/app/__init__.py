@@ -46,6 +46,24 @@ def delete_data(id):
 
     # Sinon, afficher un formulaire pour confirmer la suppression
     return render_template('delete_data.html', data=data)
+@app.route('/add_data', methods=['GET', 'POST'])
+def add_data():
+    if request.method == 'POST':
+        rna_id = request.form['rna_id']
+        rna_id_ex = request.form['rna_id_ex']
+        gestion = request.form['gestion']
+
+        # Créer un objet Data et l'ajouter à la base de données
+        data = Data(rna_id=rna_id, rna_id_ex=rna_id_ex, gestion=gestion)
+        db.session.add(data)
+        db.session.commit()
+
+        # Rediriger vers la page principale
+        return redirect(url_for('assos'))
+
+    return render_template('add_data.html')
+
+
 
 @app.route('/hello')
 @app.route('/hello/<name>')
