@@ -58,23 +58,17 @@ def add_data():
         return redirect(url_for('assos'))
 
     return render_template('add_data.html')
+@app.route('/modifier/<int:data_id>', methods=['GET', 'POST'])
+def modifier(data_id):
+    data = Data.query.get(data_id)
 
-
-@app.route('/pie_chart_data')
-def pie_chart_data():
-    # Sélectionner les 5 éléments les plus fréquents dans la colonne "gestion"
-    data = db.session.query(Data.gestion, db.func.count(Data.gestion)).\
-           group_by(Data.gestion).order_by(desc(db.func.count(Data.gestion))).limit(5).all()
-
-    # Préparer les données pour le diagramme circulaire
-    labels = [d[0] for d in data]
-    values = [d[1] for d in data]
-
-    return {
-        'labels': labels,
-        'values': values
-    }
-
+    if request.method == 'POST':
+        data.rna_id = request.form['rna_id']
+        data.rna_id_ex = request.form['rna_id_ex']
+        data.gestion = request.form['gestion']
+        db.session.commit()
+        return redirect(url_for('assos'))
+    return render_template('modifier.html', data=data)
 
 
 
