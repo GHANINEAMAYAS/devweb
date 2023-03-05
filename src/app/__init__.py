@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import select
 from sqlalchemy import desc
 import os
+import random,json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
@@ -80,6 +81,7 @@ def piechart():
         values.append(data.id)
 
     return render_template('piechart.html', labels=labels, values=values)
+
 
 @app.route('/hello')
 @app.route('/hello/<name>')
