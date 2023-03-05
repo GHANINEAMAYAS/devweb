@@ -20,6 +20,7 @@ Technologies utilisées
 
 
 Docker pour faciliter l'installation et la configuration de l'application.
+HTML5 et CSS3
 Python 3 pour développer l'application web.
 Flask pour créer l'application web.
 SQLAlchemy pour interagir avec la base de données MySQL.
