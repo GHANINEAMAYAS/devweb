@@ -70,7 +70,16 @@ def modifier(data_id):
         return redirect(url_for('assos'))
     return render_template('modifier.html', data=data)
 
+@app.route('/piechart')
+def piechart():
+    datas = Data.query.order_by(desc(Data.id)).limit(10).all()
+    labels = []
+    values = []
+    for data in datas:
+        labels.append(data.gestion)
+        values.append(data.id)
 
+    return render_template('piechart.html', labels=labels, values=values)
 
 @app.route('/hello')
 @app.route('/hello/<name>')
